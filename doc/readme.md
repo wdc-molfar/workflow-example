@@ -2,7 +2,7 @@
 
 ## Схема взаємодії сервісів
 
-![uml](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/boldak/database_basics_template/master/src/uml/example.puml)
+![uml](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/wdc-molfar/workflow-example/main/doc/puml/workflow.puml)
 
 
 ## MSAPI-специфікація робочого процесу

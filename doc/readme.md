@@ -426,7 +426,136 @@ workflow:
     npm run start
 ```
 
-## Лог
+## Лог ```npm run deploy```
+
+```sh
+
+> @molfar/workflow-example@1.0.0 deploy D:\MOLFAR\2\workflow-example
+> node deploy
+
+[
+  'https://github.com/wdc-molfar/service-tg-scraper.git',
+  'https://github.com/wdc-molfar/service-lang-detector.git',
+  'https://github.com/wdc-molfar/service-ner-uk.git',
+  'https://github.com/wdc-molfar/service-ner-ru.git',
+  'https://github.com/wdc-molfar/service-ner-en.git',
+  'https://github.com/wdc-molfar/service-log.git'
+]
+added 61 packages from 50 contributors and audited 61 packages in 16.588s
+
+14 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+Repo https://github.com/wdc-molfar/service-tg-scraper.git is deployed into D:\MOLFAR\2\workflow-example\.deployment\service-tg-scraper\service.js
+added 41 packages from 34 contributors and audited 41 packages in 13.964s
+
+2 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+Repo https://github.com/wdc-molfar/service-lang-detector.git is deployed into D:\MOLFAR\2\workflow-example\.deployment\service-lang-detector\index.js
+
+> @molfar/service-ner-uk@1.0.0 postinstall D:\MOLFAR\2\workflow-example\.deployment\service-ner-uk
+> node ./build/build
+
+MOLFAR NER SERVICE POSTINSTALL
+Install MITIE NER model for Ukrainian language
+Create temp directory C:\Users\bolda\AppData\Local\Temp\MITIE-a2dffZ
+Download https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/uk/uk_model.zip.sf-part1
+https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/uk/uk_model.zip.sf-part2
+https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/uk/uk_model.zip.sf-part3
+https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/uk/uk_model.zip.sf-part4
+https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/uk/uk_model.zip.sf-part5
+Create model directory D:\MOLFAR\2\workflow-example\.deployment\service-ner-uk\MITIE-models
+Extract model into D:\MOLFAR\2\workflow-example\.deployment\service-ner-uk\MITIE-models
+file uk_model.dat extracted
+Rename file D:\MOLFAR\2\workflow-example\.deployment\service-ner-uk\MITIE-models\uk_model.dat to D:\MOLFAR\2\workflow-example\.deployment\service-ner-uk\MITIE-models\model.dat
+Remove temp C:\Users\bolda\AppData\Local\Temp\MITIE-a2dffZ
+NER Model for Ukrainian language is installed into D:\MOLFAR\2\workflow-example\.deployment\service-ner-uk\MITIE-models
+Install MITIE package
+Collecting git+https://github.com/mit-nlp/MITIE.git (from -r requirements.txt (line 1))
+  Cloning https://github.com/mit-nlp/MITIE.git to c:\users\bolda\appdata\local\temp\pip-req-build-ozu19s9s
+added 177 packages from 128 contributors and audited 177 packages in 133.636s
+
+17 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+Repo https://github.com/wdc-molfar/service-ner-uk.git is deployed into D:\MOLFAR\2\workflow-example\.deployment\service-ner-uk\index.js
+
+> @molfar/service-ner-ru@1.0.0 postinstall D:\MOLFAR\2\workflow-example\.deployment\service-ner-ru
+> node ./build/build
+
+MOLFAR NER SERVICE POSTINSTALL
+Install MITIE NER model for Russian language
+Create temp directory C:\Users\bolda\AppData\Local\Temp\MITIE-HVp1oB
+Download https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/ru/ru_model.zip.sf-part1
+https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/ru/ru_model.zip.sf-part2
+https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/ru/ru_model.zip.sf-part3
+https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/ru/ru_model.zip.sf-part4
+https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/ru/ru_model.zip.sf-part5
+Create model directory D:\MOLFAR\2\workflow-example\.deployment\service-ner-ru\MITIE-models
+Extract model into D:\MOLFAR\2\workflow-example\.deployment\service-ner-ru\MITIE-models
+file ru_model.dat extracted
+Rename file D:\MOLFAR\2\workflow-example\.deployment\service-ner-ru\MITIE-models\ru_model.dat to D:\MOLFAR\2\workflow-example\.deployment\service-ner-ru\MITIE-models\model.dat
+Remove temp C:\Users\bolda\AppData\Local\Temp\MITIE-HVp1oB
+NER Model for Russian language is installed into D:\MOLFAR\2\workflow-example\.deployment\service-ner-ru\MITIE-models
+Install MITIE package
+Collecting git+https://github.com/mit-nlp/MITIE.git (from -r requirements.txt (line 1))
+  Cloning https://github.com/mit-nlp/MITIE.git to c:\users\bolda\appdata\local\temp\pip-req-build-_990iwe3
+added 180 packages from 128 contributors and audited 180 packages in 100.829s
+
+17 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+Repo https://github.com/wdc-molfar/service-ner-ru.git is deployed into D:\MOLFAR\2\workflow-example\.deployment\service-ner-ru\index.js
+
+> @molfar/service-ner-en@1.0.0 postinstall D:\MOLFAR\2\workflow-example\.deployment\service-ner-en
+> node ./build/build
+
+MOLFAR NER SERVICE POSTINSTALL
+Install MITIE NER model for English language
+Create temp directory C:\Users\bolda\AppData\Local\Temp\MITIE-IJBGIE
+Download https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/en/en_model.zip.sf-part1
+https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/en/en_model.zip.sf-part2
+https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/en/en_model.zip.sf-part3
+https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/en/en_model.zip.sf-part4
+https://raw.githubusercontent.com/boldak/MITIE-NER-models/main/en/en_model.zip.sf-part5
+Create model directory D:\MOLFAR\2\workflow-example\.deployment\service-ner-en\MITIE-models
+Extract model into D:\MOLFAR\2\workflow-example\.deployment\service-ner-en\MITIE-models
+file en_model.dat extracted
+Rename file D:\MOLFAR\2\workflow-example\.deployment\service-ner-en\MITIE-models\en_model.dat to D:\MOLFAR\2\workflow-example\.deployment\service-ner-en\MITIE-models\model.dat
+Remove temp C:\Users\bolda\AppData\Local\Temp\MITIE-IJBGIE
+NER Model for English language is installed into D:\MOLFAR\2\workflow-example\.deployment\service-ner-en\MITIE-models
+Install MITIE package
+Collecting git+https://github.com/mit-nlp/MITIE.git (from -r requirements.txt (line 1))
+  Cloning https://github.com/mit-nlp/MITIE.git to c:\users\bolda\appdata\local\temp\pip-req-build-bzpa3nvx
+added 177 packages from 128 contributors and audited 177 packages in 138.987s
+
+17 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+Repo https://github.com/wdc-molfar/service-ner-en.git is deployed into D:\MOLFAR\2\workflow-example\.deployment\service-ner-en\index.js
+added 43 packages from 40 contributors and audited 43 packages in 62.518s
+
+2 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+Repo https://github.com/wdc-molfar/service-log.git is deployed into D:\MOLFAR\2\workflow-example\.deployment\service-log\index.js
+
+```
+
+## Лог ```npm run start```
 
 ```sh
 configure log

@@ -1,0 +1,56 @@
+@startuml
+  component scheduler <<SERVICE>> #aaffee
+  component scraper <<SERVICE>> #aaffee
+  component "lang-detector" <<SERVICE>> as ld #aaffee
+  component "ner-uk" <<SERVICE>> as neruk #aaffee
+  component "ner-ru" <<SERVICE>> as nerru #aaffee
+  component "ner-en" <<SERVICE>> as neren #aaffee
+  component log <<SERVICE>> #aaffee
+  file "./log/messages_ner.log" as logfile
+  file "./services/tg-channels.yaml" as chfile
+  
+  component scraper_tasks <<exchange>> #line.dotted
+  queue "scraper_tasks" as stq #line.dotted
+  
+  component "scraped_messages" <<exchange>> as sm #line.dotted
+  queue "scraped_messages" as smq #line.dotted
+  
+  component processed_messages <<exchange>> as pm #line.dotted
+  queue "processed_messages_en" as pmqen #line.dotted
+  queue "processed_messages_uk" as pmquk #line.dotted
+  queue "processed_messages_ru" as pmqru #line.dotted
+  
+  component ner_messages <<exchange>> as nm #line.dotted
+  queue "ner_messages" as nmq #line.dotted
+  
+  
+  
+  
+ chfile -> scheduler 
+ scheduler --> scraper_tasks
+ scraper_tasks -> stq 
+ stq --> scraper
+ scraper -l-> sm
+ sm -l-> smq
+ smq --> ld
+ ld -> pm
+ pm --> pmqen
+ pm --> pmquk
+ pm --> pmqru
+ 
+ 
+ 
+ 
+ pmqen --> neren
+ pmquk --> neruk
+ pmqru --> nerru
+ 
+ neren --> nm
+ neruk --> nm
+ nerru --> nm
+
+ nm -> nmq 
+ 
+ nmq --> log
+ log -l-> logfile
+@enduml

@@ -1,0 +1,23 @@
+{
+  "name": "@molfar/workflow-example",
+  "version": "1.0.0",
+  "description": "Example of Molfar Workflow",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wdc-molfar/workflow-example.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wdc-molfar/workflow-example/issues"
+  },
+  "homepage": "https://github.com/wdc-molfar/workflow-example#readme",
+  "dependencies": {
+    "@molfar/amqp-client": "github:wdc-molfar/amqp-client",
+    "@molfar/csc": "github:wdc-molfar/csc"
+  }
+}

@@ -1,0 +1,406 @@
+msapi: 1.0.1
+
+metadata: 
+    title: "@molfar Workflow"
+    id: "@molfar/workflow/example"
+    
+
+workflow:
+    
+    - instance:
+        of:
+            path: ./services/scheduler.js
+            name: scheduler
+            produce:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                
+                exchange:
+                    name: scraper_tasks
+                    mode: fanout
+                        
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference 
+    - instance:
+        of:
+            repo: https://github.com/wdc-molfar/service-tg-scraper.git
+            path: ./.deployment/service-tg-scraper/service.js
+            name: scraper    
+            consume:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                
+                queue:
+                    name: scraper_tasks
+                    exchange:
+                        name: scraper_tasks
+                        mode: fanout
+                    options:
+                        noAck: true    
+                        
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+            produce:
+                
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                
+                exchange:
+                    name: scraped_messages
+                    mode: fanout
+                    options:
+                        durable: true
+                        persistent: true        
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+                                
+    - instance:
+        of:
+            repo: https://github.com/wdc-molfar/service-lang-detector.git
+            path: ./.deployment/service-lang-detector/service.js
+            
+            name: lang-detector    
+            consume:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                
+                queue:
+                    name: scraped_messages
+                    exchange:
+                        name: scraped_messages
+                        mode: fanout
+                        options:
+                            durable: true
+                            persistent: true
+                    options:
+                        noAck: false 
+                        exclusive: false   
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+                    
+            produce:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                
+                exchange:
+                    name: "processed_messages"
+                    mode: fanout
+                    options:
+                        durable: true
+                        persistent: true
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+    - instance:
+        of:
+            repo: https://github.com/wdc-molfar/service-ner-uk.git
+            path: ./.deployment/service-ner-uk/service.js
+            
+            name: ner-uk
+            consume:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                queue:
+                    name: processed_messages_uk
+                    exchange:
+                        name: processed_messages
+                        mode: fanout
+                        options:
+                            durable: true
+                            persistent: true
+                    options:
+                        noAck: false 
+                        exclusive: false   
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+                    
+            produce:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                exchange:
+                    name: "ner_messages"
+                    mode: fanout
+                    options:
+                        durable: true
+                        persistent: true
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+    - instance:
+        of:
+            repo: https://github.com/wdc-molfar/service-ner-ru.git
+            path: ./.deployment/service-ner-ru/service.js
+            
+            name: ner-ru
+            consume:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                queue:
+                    name: processed_messages_ru
+                    exchange:
+                        name: processed_messages
+                        mode: fanout
+                        options:
+                            durable: true
+                            persistent: true
+                    options:
+                        noAck: false 
+                        exclusive: false   
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+                    
+            produce:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                exchange:
+                    name: "ner_messages"
+                    mode: fanout
+                    options:
+                        durable: true
+                        persistent: true
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+                
+
+
+    - instance:
+        of:
+            repo: https://github.com/wdc-molfar/service-ner-en.git
+            path: ./.deployment/service-ner-en/service.js
+            
+            name: ner-en
+            consume:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                queue:
+                    name: processed_messages_en
+                    exchange:
+                        name: processed_messages
+                        mode: fanout
+                        options:
+                            durable: true
+                            persistent: true
+                    options:
+                        noAck: false 
+                        exclusive: false   
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+                    
+            produce:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                exchange:
+                    name: "ner_messages"
+                    mode: fanout
+                    options:
+                        durable: true
+                        persistent: true
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+    - instance:
+        of:
+            repo: https://github.com/wdc-molfar/service-log.git
+            path: ./.deployment/service-log/service.js
+            
+            name: log 
+            config: 
+                log: ./logs/ner_messages.log
+
+            consume:
+                amqp: 
+                    url: amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg
+        
+                queue:
+                    name: ner_messages
+                    exchange:
+                        name: ner_messages
+                        mode: fanout
+                        options:
+                            durable: true
+                            persistent: true
+                    options:
+                        noAck: false 
+                        exclusive: false   
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+       
+            

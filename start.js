@@ -7,7 +7,7 @@ const DEPLOYMENT_DIR = path.resolve("./.deployment")
 
 const run = async () => {
 	const spec = yaml2js( fs.readFileSync("./workflow.msapi.yaml").toString())
-
+	console.log(JSON.stringify(spec, null," "))
 	const services = spec.workflow
 	services.reverse()
 					

@@ -363,6 +363,204 @@ workflow:
 
     - instance:
         of:
+            repo: https://github.com/wdc-molfar/service-sa-uk.git
+            path: ./.deployment/service-sa-uk/service.js
+            
+            name: sentiment-analyzer-uk
+            consume:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                queue:
+                    name: sentiment_uk
+                    exchange:
+                        name: ner_messages
+                        mode: fanout
+                        options:
+                            durable: true
+                            persistent: true
+                    options:
+                        noAck: false 
+                        exclusive: false   
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+                    
+            produce:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                exchange:
+                    name: "sentiment"
+                    mode: fanout
+                    options:
+                        durable: true
+                        persistent: true
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+    - instance:
+        of:
+            repo: https://github.com/wdc-molfar/service-sa-en.git
+            path: ./.deployment/service-sa-en/service.js
+            
+            name: sentiment-analyzer-en
+            consume:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                queue:
+                    name: sentiment_en
+                    exchange:
+                        name: ner_messages
+                        mode: fanout
+                        options:
+                            durable: true
+                            persistent: true
+                    options:
+                        noAck: false 
+                        exclusive: false   
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+                    
+            produce:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                exchange:
+                    name: "sentiment"
+                    mode: fanout
+                    options:
+                        durable: true
+                        persistent: true
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+    - instance:
+        of:
+            repo: https://github.com/wdc-molfar/service-sa-ru.git
+            path: ./.deployment/service-sa-ru/service.js
+            
+            name: sentiment-analyzer-ru
+            consume:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                queue:
+                    name: sentiment_ru
+                    exchange:
+                        name: ner_messages
+                        mode: fanout
+                        options:
+                            durable: true
+                            persistent: true
+                    options:
+                        noAck: false 
+                        exclusive: false   
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+                    
+            produce:
+                amqp:
+                    url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+                exchange:
+                    name: "sentiment"
+                    mode: fanout
+                    options:
+                        durable: true
+                        persistent: true
+                message:
+                    type: object
+                    required:
+                        - type
+                        - url
+                    properties:
+                        type:
+                            type: string
+                        url:
+                            type: string
+                            format: uri-reference
+                        metadata:
+                            type: object
+                        createdAt:
+                            type: string
+                        md5:
+                            type: string
+
+    - instance:
+        of:
             repo: https://github.com/wdc-molfar/service-log.git
             path: ./.deployment/service-log/service.js
             
@@ -375,9 +573,9 @@ workflow:
                     url: amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg
         
                 queue:
-                    name: ner_messages
+                    name: sentiment_messages
                     exchange:
-                        name: ner_messages
+                        name: sentiment
                         mode: fanout
                         options:
                             durable: true

@@ -5,6 +5,12 @@
   component "ner-uk" <<SERVICE>> as neruk #aaffee
   component "ner-ru" <<SERVICE>> as nerru #aaffee
   component "ner-en" <<SERVICE>> as neren #aaffee
+  
+  component "sentiment analyzer en" <<SERVICE>> as saen #aaffee
+  component "sentiment analyzer ru" <<SERVICE>> as saru #aaffee
+  component "sentiment analyzer uk" <<SERVICE>> as sauk #aaffee
+   
+  
   component log <<SERVICE>> #aaffee
   file "./log/messages_ner.log" as logfile
   file "./services/tg-channels.yaml" as chfile
@@ -21,9 +27,13 @@
   queue "processed_messages_ru" as pmqru #line.dotted
   
   component ner_messages <<exchange>> as nm #line.dotted
-  queue "ner_messages" as nmq #line.dotted
+  queue "sentiments" as nmq #line.dotted
   
+  queue "sentiment_uk" as s_uk_q #line.dotted
+  queue "sentiment_en" as s_en_q #line.dotted
+  queue "sentiment_ru" as s_ru_q #line.dotted
   
+  component sentiments <<exchange>> as s #line.dotted
   
   
  chfile -> scheduler 
@@ -49,7 +59,18 @@
  neruk --> nm
  nerru --> nm
 
- nm -> nmq 
+ nm --> s_uk_q
+ nm --> s_en_q
+ nm --> s_ru_q
+ 
+ s_uk_q --> sauk
+ s_en_q --> saen
+ s_ru_q --> saru
+ 
+ sauk --> s
+ saen --> s 
+ saru --> s
+ s -> nmq 
  
  nmq --> log
  log -l-> logfile
